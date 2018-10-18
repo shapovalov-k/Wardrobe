@@ -1,5 +1,5 @@
 # encoding: utf-8
-require "./lib/clothes.rb"
+require "./lib/item_of_clothing.rb"
 require "./lib/wardrobe.rb"
 
 # Этот код необходим только при использовании русских букв на Windows.
@@ -46,18 +46,16 @@ while user_input == 1
   user_input = STDIN.gets.to_i
 end
 
-Dir.glob(current_path + "/*.txt") do |txt_file|
-  clothes = Clothes.new(txt_file, temperature)
-  if clothes.appropriate_for_the_weather?
-    clothes_to_suggest = Wardrobe.new(clothes)
-  end
+all_items = []
 
+Dir.glob(current_path + "/*.txt") do |txt_file|
+  item_of_clothes = ItemOfClothing.new(txt_file, temperature)
+
+  all_items << item_of_clothes
 end
 
-puts
+wardrobe = Wardrobe.new(all_items)
+
 puts "Предлагаем сегодня надеть:"
+wardrobe.clothes_to_suggest
 
-
-Кроссовки (Обувь) 0..15
-Джинсы (Штаны) -5..15
-Пальто (Верхняя одежда) -5..10
