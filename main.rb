@@ -1,6 +1,7 @@
 # encoding: utf-8
 require "./lib/item_of_clothing.rb"
 require "./lib/wardrobe.rb"
+require "./lib/your_item.rb"
 
 # Этот код необходим только при использовании русских букв на Windows.
 if Gem.win_platform?
@@ -14,37 +15,16 @@ end
 
 current_path = File.dirname(__FILE__) + '/data'
 
-puts "Добро пожаловать в 'Гардероб' !"
-puts "Мы поможем вам одеться стильно и по погоде!"
+puts "\nДобро пожаловать в 'Гардероб' !"
+puts "\nМы поможем вам одеться стильно и по погоде!"
 
-puts "Сколько градусов за окном? (можно с минусом)"
+puts "\nСколько градусов за окном? (можно с минусом)"
 temperature = STDIN.gets.to_i
-
-questions = ["Укажите название вещи, например: шарф, футболка и т.д",
-             "Укажите тип вещи, например: обувь, головной убор и т.д",
-             "Укажите диапазон температур для этой вещи, например: -5..25"
-]
 
 puts "Хотите добавить в наш гардероб свою одежду ? 1.Да 2.Нет"
 user_input = STDIN.gets.to_i
 
-while user_input == 1
-  time = Time.now
-  file_name = time.strftime("%Y-%m-%d_%Hh%M") + ".txt"
-
-  file = File.new(current_path + "/" + file_name, "a:UTF-8")
-
-  questions.each do |question|
-    puts question
-    line = STDIN.gets.to_s
-    file.puts(line)
-  end
-
-  file.close
-
-  puts "Еще одну вещь? 1.Да  2.Нет"
-  user_input = STDIN.gets.to_i
-end
+YourItem.creates(user_input, current_path)
 
 all_items = []
 
@@ -58,4 +38,3 @@ wardrobe = Wardrobe.new(all_items)
 
 puts "Предлагаем сегодня надеть:"
 wardrobe.clothes_to_suggest
-
