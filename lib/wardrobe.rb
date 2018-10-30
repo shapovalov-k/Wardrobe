@@ -17,8 +17,10 @@ class Wardrobe
 
   # В зависимости от указанной пользователем температуры предлагаем вещи
   def clothes_to_suggest
+    array = []
     items_of_the_same_type.each_value do |value|
-      puts value.select {|item| item.appropriate_for_the_weather?}.sample
+      array << value.select {|item| item.appropriate_for_the_weather?}.sample
     end
+    array
   end
 end
